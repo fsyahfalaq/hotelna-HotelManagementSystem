@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="415.0" prefWidth="359.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hotelaplha1.FXMLBookingController">
+   <children>
+      <Pane layoutY="29.0" prefHeight="51.0" prefWidth="359.0" style="-fx-background-color: #433269;">
+         <children>
+            <Label layoutX="32.0" prefHeight="51.0" prefWidth="359.0" text="Booking Form" textFill="WHITE">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+            <Label fx:id="roomNumber" layoutX="212.0" layoutY="17.0" text="RoomNo" textFill="#050505" visible="false" />
+         </children>
+      </Pane>
+      <TextField fx:id="fieldName" layoutX="14.0" layoutY="117.0" prefHeight="25.0" prefWidth="179.0" promptText="Name" />
+      <TextField fx:id="fieldAddress" layoutX="14.0" layoutY="170.0" prefHeight="25.0" prefWidth="332.0" promptText="Address" />
+      <TextField fx:id="fieldPhone" layoutX="14.0" layoutY="227.0" prefHeight="25.0" prefWidth="179.0" promptText="Phone Number" />
+      <TextField fx:id="fieldIdentityNumber" layoutX="14.0" layoutY="279.0" prefHeight="25.0" prefWidth="179.0" promptText="Identity Number" />
+      <Button layoutX="234.0" layoutY="364.0" mnemonicParsing="false" onAction="#submitForm" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #7460e5;" text="Submit" textFill="WHITE" />
+      <Label layoutX="16.0" layoutY="100.0" text="Name" />
+      <Label layoutX="16.0" layoutY="153.0" text="Address" />
+      <Label layoutX="16.0" layoutY="208.0" prefHeight="11.0" prefWidth="98.0" text="Phone Number" />
+      <Label layoutX="16.0" layoutY="262.0" prefHeight="17.0" prefWidth="98.0" text="Identity Number" />
+      <Button fx:id="closeButton" layoutX="16.0" layoutY="364.0" mnemonicParsing="false" onAction="#closeForm" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #7460e5;" text="Close" textFill="WHITE" />
+   </children>
+</AnchorPane>
