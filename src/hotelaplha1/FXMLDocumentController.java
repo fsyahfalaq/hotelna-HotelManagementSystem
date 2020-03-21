@@ -10,6 +10,8 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import library.Users;
 
 /**
  *
@@ -45,23 +48,40 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private Label labelError;
-
-    @FXML
+    
+    /*
+     *  loginVerification will return boolean true or false as a sign if the user is found in database 
+     */
     private boolean loginVerification(String username, String password) throws IOException, SQLException {
+        
+        /*
+         * Get DashboardController using FXML Loader
+         */
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLDashboard.fxml"));
         Parent root = (Parent) loader.load();
-
         FXMLDashboardController DashboardController = loader.getController();
 
-        //
+        /* Initialize loginStatus
+         * Default login Status is falsse
+         */
         boolean loginStatus = false;
+        
         String query = "SELECT * from users WHERE username = ? AND password = ?";
+        
+        /*
+         *  Verification process
+         */
         try {
             PreparedStatement preparedStatement = DashboardController.getConnection().prepareStatement(query);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             
+            //Get result from query
             ResultSet rs = preparedStatement.executeQuery();
+            
+            /* If email or password are not found, labelError will contains error message
+             * If else the loginStatus will contains true 
+             */
             if (!rs.next()) {
                 labelError.setText("Enter Correct Email/Password");
             } else {
@@ -69,27 +89,70 @@ public class FXMLDocumentController implements Initializable {
             }
         } catch(SQLException ex)  {
                 System.err.println(ex.getMessage());
-//                status = "Exception";
         }
-
         return loginStatus;
     }
-
-    @FXML
-    private void loginButtonAction(ActionEvent event) throws IOException {
+    
+    private Users getUserData(String username, String password) throws IOException, SQLException {
         
-        try {
-            if(loginVerification(fieldUsername.getText(), fieldPassword.getText())) {
-                Parent dashboardViewParent = FXMLLoader.load(getClass().getResource("FXMLDashboard.fxml"));
-                Scene dashboardViewScene = new Scene(dashboardViewParent);
-
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                window.setScene(dashboardViewScene);
-                window.show();
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        /*
+         * Get DashboardController using FXML Loader
+         */
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLDashboard.fxml"));
+        Parent root = (Parent) loader.load();
+        FXMLDashboardController DashboardController = loader.getController();
+        
+        
+        /*
+         *  Process to get user data from db
+         */
+        String query = "SELECT id, name, username, role FROM users WHERE username = ? AND password = ?";
+        PreparedStatement preparedStatement = DashboardController.getConnection().prepareStatement(query);
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
+        
+        ResultSet rs = preparedStatement.executeQuery();
+        
+        Users user = null;
+        if(rs.next()) {
+            user = new Users(rs.getInt("id"), rs.getString("name"), rs.getString("username"), rs.getInt("role"));
         }
+        
+        return user;
+    }
+
+    
+    private String getFxmlName(int role) {
+        String fxmlName = "";
+        
+        if (role == 1) {
+            fxmlName = "FXMLDashboardAdmin.fxml";
+        } else if (role == 2) {
+            fxmlName = "FXMLDashboard.fxml";
+        }
+        
+        return fxmlName;
+    }
+    
+    
+    @FXML
+    private void loginButtonAction(ActionEvent event) throws IOException, SQLException {
+        
+    String username = fieldUsername.getText();
+    String password = fieldPassword.getText();
+    
+    if(loginVerification(username, password) == true) {
+        Users user = getUserData(username, password);
+        
+        String fxmlName = getFxmlName(user.getRole());
+        Parent dashboardViewParent = FXMLLoader.load(getClass().getResource(fxmlName));
+        Scene dashboardViewScene = new Scene(dashboardViewParent);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(dashboardViewScene);
+        window.show();
+    }
+        
         
     }
 

@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="HotelAplha1.jar" size="18861" download="eager" />
+    <jar href="HotelAplha1.jar" size="19836" download="eager" />
     <jar href="lib\mysql-connector-java-5.1.48-bin.jar" size="1006959" download="eager" />
   </resources>
   <jfx:javafx-desc  width="800" height="600" main-class="hotelaplha1.HotelAplha1"  name="HotelAplha1" />
