@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import library.Rooms;
+import model.Rooms;
 import java.sql.*;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -32,7 +32,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
-import library.Guests;
+import model.Guests;
 
 /**
  * FXML Controller class
@@ -188,22 +188,10 @@ public class FXMLDashboardController implements Initializable {
                                  tableView.getItems().removeAll(tableView.getSelectionModel().getSelectedItem());
                                  String query = "UPDATE rooms SET Status='Available' WHERE Room_no="+rooms.getRoom_no()+"";
                                  executeQuery(query);
+                                 
+                                 query = "DELETE from guests WHERE room_no = "+rooms.getRoom_no();
+                                 executeQuery(query);
                                  reloadTable();
-//                                try {
-//
-//                                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLCoba.fxml"));
-//                                    Parent root1 = (Parent) fxmlLoader.load();
-//                                    Stage stage = new Stage();
-//                                    stage.initModality(Modality.APPLICATION_MODAL);
-//                                    stage.initStyle(StageStyle.UNDECORATED);
-//
-//                                    Scene scene = new Scene(root1);
-//
-//                                    stage.setScene(scene);
-//                                    stage.show();
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                }
                             });
                         } else {
                             bookButton = new Button("Book Now");
@@ -252,15 +240,6 @@ public class FXMLDashboardController implements Initializable {
         tableView.refresh();
         tableView.setItems(list);
     }
-
-    @FXML
-    private void deleteRoom(ActionEvent event) {
-
-        Rooms rooms = tableView.getSelectionModel().getSelectedItem();
-
-        tableView.getItems().removeAll(tableView.getSelectionModel().getSelectedItem());
-        labelTitle.setText(rooms.getType());
-    }
     
     public ObservableList<Guests> getGuestsList() {
         ObservableList<Guests> guestsList = FXCollections.observableArrayList();
@@ -300,7 +279,9 @@ public class FXMLDashboardController implements Initializable {
 
     public void reloadTable() {
         showRooms();
+        showGuests();
         tableView.refresh();
+        guestsTable.refresh();
     }
     
     @FXML

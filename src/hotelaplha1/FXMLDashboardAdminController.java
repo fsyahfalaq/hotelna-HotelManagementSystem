@@ -18,24 +18,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.util.Callback;
-import library.Rooms;
+import model.Rooms;
+import model.Users;
 
 /**
  * FXML Controller class
@@ -51,7 +48,7 @@ public class FXMLDashboardAdminController implements Initializable {
     private Button btnRoom;
 
     @FXML
-    private Button btnGuest;
+    private Button btnUsers;
 
     @FXML
     private Label labelTitle;
@@ -96,11 +93,54 @@ public class FXMLDashboardAdminController implements Initializable {
     private TableColumn<Rooms, Integer> columnCapacity;
 
     @FXML
-    private Button closeButton;
+    private Pane paneAddNewUser;
+
+    @FXML
+    private TextField fieldName;
+
+    @FXML
+    private TextField fieldUsername;
+
+    @FXML
+    private Button btnSaveNewUser;
+
+    @FXML
+    private Button btnCancelAddNewUser;
+
+    @FXML
+    private Label labelErrorUser;
+
+    @FXML
+    private PasswordField fieldPassword;
+
+    @FXML
+    private ComboBox<String> comboBoxRole;
     
+    @FXML
+    private GridPane paneUser;
+    
+    @FXML
+    private TableView<Users> tableViewUser;
+
+    @FXML
+    private TableColumn<Users, Integer> columnId;
+
+    @FXML
+    private TableColumn<Users, String> columnName;
+
+    @FXML
+    private TableColumn<Users, String> columnUsername;
+
+    @FXML
+    private TableColumn<Users, Integer> columnRole;
+    
+    @FXML
+    private Button closeButton;
     /**
      * Initializes the controller class.
      */
+    
+    ObservableList<String> roleList = FXCollections.observableArrayList("User", "Admin");
     
     public Connection getConnection() {
         Connection conn;
@@ -158,17 +198,21 @@ public class FXMLDashboardAdminController implements Initializable {
     }
     
     @FXML
+    private void deleteRoom(ActionEvent event) throws SQLException {
+
+        Rooms rooms = tableView.getSelectionModel().getSelectedItem();
+        String query = "DELETE from rooms WHERE Room_no = "+rooms.getRoom_no();
+        executeQuery(query);
+        
+        tableView.getItems().removeAll(tableView.getSelectionModel().getSelectedItem());
+    }
+    
+    @FXML
     private void btnAddNewRoomHandle(ActionEvent event) {
         paneAddNewRoom.toFront();
         labelTitle.setText("Add New Room");
     }
-
-    @FXML
-    private void btnCancelHandle(ActionEvent event) {
-        paneRoom.toFront();
-        labelTitle.setText("Room");
-    }
-
+    
     @FXML
     public void btnSaveNewRoom(ActionEvent event) throws IOException, SQLException {
         /*
@@ -188,12 +232,109 @@ public class FXMLDashboardAdminController implements Initializable {
             fieldRoomCapacity.getText()+"','Available')";
         
             executeQuery(query);
+            
+            showRooms();
+            tableView.refresh();
             labelErrorRoom.setText("");
             paneRoom.toFront();
         } else {
             labelErrorRoom.setText("The room number already exists");
         }
       
+    }
+    
+    public ObservableList<Users> getUsersList() {
+        ObservableList<Users> usersList = FXCollections.observableArrayList();
+        Connection connection = getConnection();
+        String query = "SELECT id, name, username, role FROM users";
+        Statement st;
+        ResultSet rs;
+
+        try {
+            st = connection.createStatement();
+            rs = st.executeQuery(query);
+            Users users;
+            while (rs.next()) {
+                users = new Users(rs.getInt("id"), rs.getString("name"), rs.getString("username"), rs.getInt("role"));
+
+                usersList.add(users);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return usersList;
+    }
+    
+    public void showUsers() {
+        ObservableList<Users> list = getUsersList();
+
+        columnId.setCellValueFactory(new PropertyValueFactory<Users, Integer>("id"));
+        columnName.setCellValueFactory(new PropertyValueFactory<Users, String>("name"));
+        columnUsername.setCellValueFactory(new PropertyValueFactory<Users, String>("username"));
+        columnRole.setCellValueFactory(new PropertyValueFactory<Users, Integer>("role"));
+
+        tableViewUser.refresh();
+        tableViewUser.setItems(list);
+    }
+    
+    @FXML
+    public void btnAddNewUserHandle() {
+        paneAddNewUser.toFront();
+        labelTitle.setText("Add New User");
+    }
+    
+    @FXML
+    public void btnSaveNewUser() throws SQLException {
+        /*
+         * Checking the new user username 
+         * if that username already exist labelError will contains error message 
+         */
+        String query = "SELECT * from users WHERE username = ?"; 
+        
+        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        preparedStatement.setString(1, fieldRoomNumber.getText());
+        
+        ResultSet rs = preparedStatement.executeQuery();
+        
+        int role;
+        if(comboBoxRole.getSelectionModel().getSelectedItem() == "Admin" ) {
+            role = 1; 
+        } else {
+            role = 2;
+        }
+        
+        if(!rs.next()) {
+            query = "INSERT into `users` (`name`, `username`, `password`, `role`) " + 
+            "VALUES('"+fieldName.getText()+"','"+fieldUsername.getText()+"','"+
+            fieldPassword.getText()+"','"+role+"')";
+        
+            executeQuery(query);
+            
+            showUsers();
+            tableViewUser.refresh();
+            labelErrorUser.setText("");
+            fieldName.setText("");
+            fieldUsername.setText("");
+            fieldPassword.setText("");
+            paneUser.toFront();
+        } else {
+            labelErrorUser.setText("The username number already exists");
+        }
+    }
+    
+    @FXML
+    private void deleteUser(){
+        Users users = tableViewUser.getSelectionModel().getSelectedItem();
+        String query = "DELETE from users WHERE id = "+users.getId();
+        executeQuery(query);
+        
+        tableViewUser.getItems().removeAll(tableViewUser.getSelectionModel().getSelectedItem());
+    }
+    
+    @FXML
+    private void btnCancelHandle(ActionEvent event) {
+        paneRoom.toFront();
+        labelTitle.setText("Room");
     }
 
     @FXML
@@ -209,13 +350,20 @@ public class FXMLDashboardAdminController implements Initializable {
             labelTitle.setText("Room");
         } else if(event.getSource() == btnDashboard) {
             labelTitle.setText("Admin Dashboard");
+        } else if(event.getSource() == btnUsers) {
+            paneUser.toFront();
+            labelTitle.setText("Users");
         }
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        comboBoxRole.setValue("User");
+        comboBoxRole.setItems(roleList);
+        
         showRooms();
+        showUsers();
     }    
     
 }

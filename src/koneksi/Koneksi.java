@@ -15,9 +15,9 @@ public class Koneksi {
     
     public static Connection Koneksi() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("org.mariadb.jdbc.Driver");
             
-            Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost/tutorialjava", "root", "");
+            Connection koneksi = DriverManager.getConnection("jdbc:mariadb://localhost/tutorialjava", "root", "");
             
             return koneksi;
         } catch(ClassNotFoundException | SQLException e) {
