@@ -49,12 +49,11 @@
                <children>
                   <TableView fx:id="guestsTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                     <columns>
-                      <TableColumn fx:id="columnBookingId" prefWidth="81.0" text="Booking ID" />
-                      <TableColumn fx:id="columnName" minWidth="0.0" prefWidth="69.0" text="Name" />
-                        <TableColumn fx:id="columnAddress" minWidth="0.0" prefWidth="69.0" text="Address" />
-                        <TableColumn fx:id="columnPhone" minWidth="0.0" prefWidth="69.0" text="Phone" />
-                        <TableColumn fx:id="columnIdentityNumber" minWidth="0.0" prefWidth="113.0" text="Identity Number" />
-                        <TableColumn fx:id="columnRoom" minWidth="0.0" prefWidth="113.0" text="Room" />
+                      <TableColumn fx:id="columnBookingId" prefWidth="70.0" text="Booking ID" />
+                      <TableColumn fx:id="columnName" minWidth="0.0" prefWidth="138.0" text="Name" />
+                        <TableColumn fx:id="columnPhone" minWidth="0.0" prefWidth="151.0" text="Phone" />
+                        <TableColumn fx:id="columnIdentityNumber" minWidth="0.0" prefWidth="154.0" text="Identity Number" />
+                        <TableColumn fx:id="columnRoom" minWidth="0.0" prefWidth="60.0" text="Room" />
                     </columns>
                   </TableView>
                   <HBox prefHeight="57.0" prefWidth="553.0" spacing="20.0">
@@ -91,11 +90,12 @@
                   </HBox>
                   <TableView fx:id="tableView" prefHeight="329.0" prefWidth="523.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <columns>
-                      <TableColumn fx:id="columnRoom_no" prefWidth="64.0" text="Room No" />
-                      <TableColumn fx:id="columnType" prefWidth="142.0" text="Type" />
-                        <TableColumn fx:id="columnCapacity" minWidth="0.0" prefWidth="106.0" text="Capacity" />
-                        <TableColumn fx:id="columnStatus" minWidth="0.0" prefWidth="162.0" text="Status" />
-                        <TableColumn fx:id="columnAction" minWidth="0.0" prefWidth="99.0" text="Action" />
+                      <TableColumn fx:id="columnRoom_no" prefWidth="58.0" text="Room No" />
+                      <TableColumn fx:id="columnType" prefWidth="93.0" text="Type" />
+                        <TableColumn fx:id="columnCapacity" minWidth="0.0" prefWidth="84.0" text="Capacity" />
+                        <TableColumn fx:id="columnStatus" minWidth="0.0" prefWidth="86.0" text="Status" />
+                        <TableColumn fx:id="columnPrice" minWidth="0.0" prefWidth="160.0" text="Price" />
+                        <TableColumn fx:id="columnAction" minWidth="0.0" prefWidth="92.0" text="Action" />
                     </columns>
                   </TableView>
                </children>

@@ -12,15 +12,13 @@ package model;
 public class Guests {
     private int bookingId;
     private String name;
-    private String address;
     private String phone;
     private String identityNumber;
     private int room;
 
-    public Guests(int bookingId, String name, String address, String phone, String identityNumber, int room) {
+    public Guests(int bookingId, String name, String phone, String identityNumber, int room) {
         this.bookingId = bookingId;
         this.name = name;
-        this.address = address;
         this.phone = phone;
         this.identityNumber = identityNumber;
         this.room = room;
@@ -32,10 +30,6 @@ public class Guests {
     
     public String getName() {
         return name;
-    }
-    
-    public String getAddress() {
-        return address;
     }
     
     public String getPhone() {

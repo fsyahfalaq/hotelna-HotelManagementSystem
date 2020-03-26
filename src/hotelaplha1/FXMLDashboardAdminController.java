@@ -135,6 +135,9 @@ public class FXMLDashboardAdminController implements Initializable {
     private TableColumn<Users, Integer> columnRole;
     
     @FXML
+    private TextField fieldPrice;
+    
+    @FXML
     private Button closeButton;
     /**
      * Initializes the controller class.
@@ -176,7 +179,7 @@ public class FXMLDashboardAdminController implements Initializable {
             rs = st.executeQuery(query);
             Rooms rooms;
             while (rs.next()) {
-                rooms = new Rooms(rs.getInt("Room_no"), rs.getString("Type"), rs.getInt("Capacity"), rs.getString("Status"));
+                rooms = new Rooms(rs.getInt("Room_no"), rs.getString("Type"), rs.getInt("Capacity"), rs.getString("Status"), rs.getInt("Price"));
 
                 roomsList.add(rooms);
             }
@@ -227,9 +230,9 @@ public class FXMLDashboardAdminController implements Initializable {
         ResultSet rs = preparedStatement.executeQuery();
         
         if(!rs.next()) {
-            query = "INSERT into `rooms` (`Room_no`, `Type`, `Capacity`, `Status`) " + 
+            query = "INSERT into `rooms` (`Room_no`, `Type`, `Capacity`, `Status`, Price) " + 
             "VALUES('"+fieldRoomNumber.getText()+"','"+fieldRoomType.getText()+"','"+
-            fieldRoomCapacity.getText()+"','Available')";
+            fieldRoomCapacity.getText()+"','Available','"+fieldPrice.getText()+"')";
         
             executeQuery(query);
             

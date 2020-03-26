@@ -16,13 +16,15 @@ public class Rooms {
     private String type;
     private int capacity;
     private String status;
+    private int price;
     private Button button;
 
-    public Rooms(int Room_no, String Type, int Capacity, String Status){
+    public Rooms(int Room_no, String Type, int Capacity, String Status, int Price){
         this.room_no = Room_no;
     	this.type = Type;
         this.capacity = Capacity;
         this.status = Status;
+        this.price = Price;
         this.button = button;
     }
 
@@ -39,6 +41,10 @@ public class Rooms {
 
     public String getStatus() {
         return status;
+    }
+    
+    public int getPrice() {
+        return price;
     }
     
     public Button getButton() {

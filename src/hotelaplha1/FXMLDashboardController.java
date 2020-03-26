@@ -73,6 +73,9 @@ public class FXMLDashboardController implements Initializable {
 
     @FXML
     private TableColumn<Rooms, String> columnStatus;
+    
+    @FXML
+    private TableColumn<Rooms, String> columnPrice;
 
     @FXML
     private TableColumn<Rooms, String> columnAction;
@@ -144,7 +147,7 @@ public class FXMLDashboardController implements Initializable {
             rs = st.executeQuery(query);
             Rooms rooms;
             while (rs.next()) {
-                rooms = new Rooms(rs.getInt("Room_no"), rs.getString("Type"), rs.getInt("Capacity"), rs.getString("Status"));
+                rooms = new Rooms(rs.getInt("Room_no"), rs.getString("Type"), rs.getInt("Capacity"), rs.getString("Status"), rs.getInt("Price"));
 
                 roomsList.add(rooms);
             }
@@ -162,6 +165,7 @@ public class FXMLDashboardController implements Initializable {
         columnType.setCellValueFactory(new PropertyValueFactory<Rooms, String>("type"));
         columnCapacity.setCellValueFactory(new PropertyValueFactory<Rooms, Integer>("capacity"));
         columnStatus.setCellValueFactory(new PropertyValueFactory<Rooms, String>("Status"));
+        columnPrice.setCellValueFactory(new PropertyValueFactory<Rooms, String>("Price"));
         columnAction.setCellValueFactory(new PropertyValueFactory<Rooms, String>("Button"));
 
         Callback<TableColumn<Rooms, String>, TableCell<Rooms, String>> cellFactory = (params) -> {
@@ -205,8 +209,7 @@ public class FXMLDashboardController implements Initializable {
                                      * Get Room Number and convert to string  
                                      */
                                     Rooms rooms = tableView.getSelectionModel().getSelectedItem();
-                                    String numberRoom = Integer.toString(rooms.getRoom_no());
-                                    bookingController.setRoomNo(numberRoom);
+                                    bookingController.setRoomInfo(rooms.getRoom_no(), rooms.getType(), rooms.getPrice());
                                     
                                     Stage stage = new Stage();
                                     stage.initModality(Modality.APPLICATION_MODAL);
@@ -253,7 +256,7 @@ public class FXMLDashboardController implements Initializable {
             rs = st.executeQuery(query);
             Guests guests;
             while (rs.next()) {
-                guests = new Guests(rs.getInt("booking_id"), rs.getString("name"), rs.getString("address"), rs.getString("phone"), rs.getString("identity_number"), rs.getInt("room_no"));
+                guests = new Guests(rs.getInt("booking_id"), rs.getString("name"), rs.getString("identity_number"), rs.getString("phone"), rs.getInt("room_no"));
 
                 guestsList.add(guests);
             }
@@ -269,7 +272,6 @@ public class FXMLDashboardController implements Initializable {
 
         columnBookingId.setCellValueFactory(new PropertyValueFactory<Guests, Integer>("bookingId"));
         columnName.setCellValueFactory(new PropertyValueFactory<Guests, String>("name"));
-        columnAddress.setCellValueFactory(new PropertyValueFactory<Guests, String>("address"));
         columnPhone.setCellValueFactory(new PropertyValueFactory<Guests, String>("phone"));
         columnIdentityNumber.setCellValueFactory(new PropertyValueFactory<Guests, String>("identityNumber"));
         columnRoom.setCellValueFactory(new PropertyValueFactory<Guests, Integer>("room"));

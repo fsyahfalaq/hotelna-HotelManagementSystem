@@ -7,8 +7,9 @@
             <file>file:/C:/Users/fikri/Documents/NetBeansProjects/HotelAplha1/src/hotelaplha1/FXMLDashboardAdminController.java</file>
             <file>file:/C:/Users/fikri/Documents/NetBeansProjects/HotelAplha1/src/hotelaplha1/FXMLDashboardController.java</file>
             <file>file:/C:/Users/fikri/Documents/NetBeansProjects/HotelAplha1/src/koneksi/Koneksi.java</file>
-            <file>file:/C:/Users/fikri/Documents/NetBeansProjects/HotelAplha1/src/hotelaplha1/FXMLDocumentController.java</file>
-            <file>file:/C:/Users/fikri/Documents/NetBeansProjects/HotelAplha1/nbproject/jfx-impl.xml</file>
+            <file>file:/C:/Users/fikri/Documents/NetBeansProjects/HotelAplha1/src/model/Guests.java</file>
+            <file>file:/C:/Users/fikri/Documents/NetBeansProjects/HotelAplha1/src/hotelaplha1/FXMLBookingController.java</file>
+            <file>file:/C:/Users/fikri/Documents/NetBeansProjects/HotelAplha1/src/model/Rooms.java</file>
         </group>
     </open-files>
 </project-private>
