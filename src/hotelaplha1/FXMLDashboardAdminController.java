@@ -16,6 +16,8 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -76,6 +78,9 @@ public class FXMLDashboardAdminController implements Initializable {
 
     @FXML
     private GridPane paneRoom;
+    
+    @FXML
+    private TextField fieldSearchRoom;
 
     @FXML
     private Button btnAddNewRoom;
@@ -102,8 +107,11 @@ public class FXMLDashboardAdminController implements Initializable {
     private TextField fieldUsername;
 
     @FXML
+    private TextField fieldSearchUser;
+    
+    @FXML
     private Button btnSaveNewUser;
-
+    
     @FXML
     private Button btnCancelAddNewUser;
 
@@ -200,6 +208,39 @@ public class FXMLDashboardAdminController implements Initializable {
         tableView.setItems(list);
     }
     
+    public void searchRoomTable() {
+        FilteredList<Rooms> filteredData = new FilteredList<>(getRoomsList(), p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        fieldSearchRoom.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(rooms -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name field in your object with filter.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (String.valueOf(rooms.getRoom_no()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Room No.
+                } else if (String.valueOf(rooms.getType()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Type.
+                }
+
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        
+        SortedList<Rooms> sortedData = new SortedList<>(filteredData);
+        // 4. Bind the SortedList comparator to the TableView comparator
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        // 5. Add sorted (and filtered) data to the table.
+        tableView.setItems(sortedData);
+    }
+    
     @FXML
     private void deleteRoom(ActionEvent event) throws SQLException {
 
@@ -278,6 +319,41 @@ public class FXMLDashboardAdminController implements Initializable {
 
         tableViewUser.refresh();
         tableViewUser.setItems(list);
+    }
+    
+    public void searchUserTable() {
+        FilteredList<Users> filteredData = new FilteredList<>(getUsersList(), p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        fieldSearchUser.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(users -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name field in your object with filter.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (String.valueOf(users.getName()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Room No.
+                } else if (String.valueOf(users.getUsername()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Type.
+                } else if (String.valueOf(users.getId()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Type.
+                } 
+
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        
+        SortedList<Users> sortedData = new SortedList<>(filteredData);
+        // 4. Bind the SortedList comparator to the TableView comparator
+        sortedData.comparatorProperty().bind(tableViewUser.comparatorProperty());
+        // 5. Add sorted (and filtered) data to the table.
+        tableViewUser.setItems(sortedData);
     }
     
     @FXML
@@ -367,6 +443,9 @@ public class FXMLDashboardAdminController implements Initializable {
         
         showRooms();
         showUsers();
+        
+        searchRoomTable();
+        searchUserTable();
     }    
     
 }

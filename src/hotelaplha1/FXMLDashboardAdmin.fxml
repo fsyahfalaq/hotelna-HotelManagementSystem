@@ -41,67 +41,6 @@
       </Pane>
       <StackPane layoutX="238.0" layoutY="136.0" prefHeight="387.0" prefWidth="598.0">
          <children>
-            <GridPane fx:id="paneRoom" style="-fx-background-color: #fff;">
-               <columnConstraints>
-                  <ColumnConstraints maxWidth="576.0" minWidth="0.0" prefWidth="0.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="576.0" minWidth="0.0" prefWidth="534.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="234.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="329.0" minHeight="10.0" prefHeight="318.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <HBox prefHeight="57.0" prefWidth="553.0" spacing="20.0" style="-fx-background-color: #fff;" GridPane.columnIndex="1">
-                     <children>
-                        <Button fx:id="btnAddNewRoom" mnemonicParsing="false" onAction="#btnAddNewRoomHandle" prefHeight="25.0" prefWidth="143.0" style="-fx-background-color: #433269;" text="Add New Room" textFill="WHITE" />
-                        <Button mnemonicParsing="false" onAction="#deleteRoom" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="Delete" textFill="WHITE" />
-                        <TextField prefHeight="25.0" prefWidth="174.0" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="Search" textFill="WHITE" />
-                     </children>
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </HBox>
-                  <TableView fx:id="tableView" prefHeight="329.0" prefWidth="438.0" style="-fx-background-color: #fff;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <columns>
-                        <TableColumn fx:id="columnRoom_no" prefWidth="162.0" text="Room No" />
-                        <TableColumn fx:id="columnType" prefWidth="198.0" text="Type" />
-                        <TableColumn fx:id="columnCapacity" minWidth="0.0" prefWidth="215.0" text="Capacity" />
-                     </columns>
-                  </TableView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="paneUser" style="-fx-background-color: #fff;">
-               <columnConstraints>
-                  <ColumnConstraints maxWidth="576.0" minWidth="0.0" prefWidth="0.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="576.0" minWidth="0.0" prefWidth="534.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="234.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="329.0" minHeight="10.0" prefHeight="318.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <HBox prefHeight="57.0" prefWidth="553.0" spacing="20.0" style="-fx-background-color: #fff;" GridPane.columnIndex="1">
-                     <children>
-                        <Button fx:id="btnAddNewUser" mnemonicParsing="false" onAction="#btnAddNewUserHandle" prefHeight="25.0" prefWidth="143.0" style="-fx-background-color: #433269;" text="Add New User" textFill="WHITE" />
-                        <Button mnemonicParsing="false" onAction="#deleteUser" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="Delete" textFill="WHITE" />
-                        <TextField prefHeight="25.0" prefWidth="174.0" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="Search" textFill="WHITE" />
-                     </children>
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </HBox>
-                  <TableView fx:id="tableViewUser" prefHeight="329.0" prefWidth="438.0" style="-fx-background-color: #fff;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <columns>
-                        <TableColumn fx:id="columnId" prefWidth="64.0" text="Id" />
-                        <TableColumn fx:id="columnName" prefWidth="173.0" text="Name" />
-                        <TableColumn fx:id="columnUsername" minWidth="0.0" prefWidth="175.0" text="Username" />
-                        <TableColumn fx:id="columnRole" minWidth="0.0" prefWidth="175.0" text="Role" />
-                     </columns>
-                  </TableView>
-               </children>
-            </GridPane>
             <Pane fx:id="paneAddNewUser" prefHeight="387.0" prefWidth="481.0" style="-fx-background-color: #fff;">
                <children>
                   <TextField fx:id="fieldName" layoutX="307.0" layoutY="23.0" prefHeight="25.0" prefWidth="219.0" />
@@ -119,20 +58,81 @@
             </Pane>
             <Pane fx:id="paneAddNewRoom" prefHeight="387.0" prefWidth="481.0" style="-fx-background-color: #fff;">
                <children>
-                  <TextField fx:id="fieldRoomNumber" layoutX="14.0" layoutY="31.0" prefHeight="25.0" prefWidth="47.0" />
-                  <Label layoutX="15.0" layoutY="14.0" text="Room Number" />
-                  <Label layoutX="14.0" layoutY="77.0" text="Room Type" />
-                  <TextField fx:id="fieldRoomType" layoutX="14.0" layoutY="94.0" />
-                  <Label layoutX="15.0" layoutY="140.0" text="Room Capacity" />
-                  <TextField fx:id="fieldRoomCapacity" layoutX="14.0" layoutY="157.0" prefHeight="25.0" prefWidth="47.0" />
-                  <Button fx:id="btnSaveNewRoom" layoutX="9.0" layoutY="275.0" mnemonicParsing="false" onAction="#btnSaveNewRoom" prefHeight="31.0" prefWidth="104.0" style="-fx-background-color: #433269;" text="Save New Room" textFill="WHITE" />
-                  <Button fx:id="btnCancelAddNewRoom" layoutX="141.0" layoutY="275.0" mnemonicParsing="false" onAction="#btnCancelHandle" prefHeight="31.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="Cancel" textFill="WHITE" />
+                  <TextField fx:id="fieldRoomNumber" layoutX="327.0" layoutY="31.0" prefHeight="25.0" prefWidth="143.0" />
+                  <Label layoutX="34.0" layoutY="35.0" text="Room Number" />
+                  <Label layoutX="35.0" layoutY="98.0" text="Room Type" />
+                  <TextField fx:id="fieldRoomType" layoutX="327.0" layoutY="94.0" prefHeight="25.0" prefWidth="143.0" />
+                  <Label layoutX="34.0" layoutY="161.0" text="Room Capacity" />
+                  <TextField fx:id="fieldRoomCapacity" layoutX="327.0" layoutY="157.0" prefHeight="25.0" prefWidth="143.0" />
+                  <Button fx:id="btnSaveNewRoom" layoutX="334.0" layoutY="291.0" mnemonicParsing="false" onAction="#btnSaveNewRoom" prefHeight="31.0" prefWidth="104.0" style="-fx-background-color: #433269;" text="Save New Room" textFill="WHITE" />
+                  <Button fx:id="btnCancelAddNewRoom" layoutX="502.0" layoutY="291.0" mnemonicParsing="false" onAction="#btnCancelHandle" prefHeight="31.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="Cancel" textFill="WHITE" />
                   <Label fx:id="labelErrorRoom" layoutX="14.0" layoutY="248.0" prefHeight="17.0" prefWidth="199.0" style="-fx-background-color: #fff;" textFill="RED" />
-                  <Label layoutX="15.0" layoutY="194.0" text="Price" />
-                  <TextField fx:id="fieldPrice" layoutX="33.0" layoutY="211.0" />
-                  <Label layoutX="14.0" layoutY="215.0" text="Rp" />
+                  <Label layoutX="35.0" layoutY="215.0" text="Price" />
+                  <TextField fx:id="fieldPrice" layoutX="346.0" layoutY="211.0" prefHeight="25.0" prefWidth="124.0" />
+                  <Label layoutX="327.0" layoutY="215.0" text="Rp" />
                </children>
             </Pane>
+            <GridPane fx:id="paneUser" style="-fx-background-color: #fff;">
+               <columnConstraints>
+                  <ColumnConstraints maxWidth="576.0" minWidth="0.0" prefWidth="0.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="576.0" minWidth="0.0" prefWidth="534.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="234.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="329.0" minHeight="10.0" prefHeight="318.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <HBox prefHeight="57.0" prefWidth="553.0" spacing="20.0" style="-fx-background-color: #fff;" GridPane.columnIndex="1">
+                     <children>
+                        <Button fx:id="btnAddNewUser" mnemonicParsing="false" onAction="#btnAddNewUserHandle" prefHeight="25.0" prefWidth="143.0" style="-fx-background-color: #433269;" text="Add New User" textFill="WHITE" />
+                        <Button mnemonicParsing="false" onAction="#deleteUser" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="Delete" textFill="WHITE" />
+                        <TextField fx:id="fieldSearchUser" prefHeight="25.0" prefWidth="174.0" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="Search" textFill="WHITE" />
+                     </children>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </HBox>
+                  <TableView fx:id="tableViewUser" prefHeight="329.0" prefWidth="438.0" style="-fx-background-color: #fff;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <columns>
+                        <TableColumn fx:id="columnId" prefWidth="64.0" text="Id" />
+                        <TableColumn fx:id="columnName" prefWidth="173.0" text="Name" />
+                        <TableColumn fx:id="columnUsername" minWidth="0.0" prefWidth="175.0" text="Username" />
+                        <TableColumn fx:id="columnRole" minWidth="0.0" prefWidth="175.0" text="Role" />
+                     </columns>
+                  </TableView>
+               </children>
+            </GridPane>
+            <GridPane fx:id="paneRoom" style="-fx-background-color: #fff;">
+               <columnConstraints>
+                  <ColumnConstraints maxWidth="576.0" minWidth="0.0" prefWidth="0.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="576.0" minWidth="0.0" prefWidth="534.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="234.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="329.0" minHeight="10.0" prefHeight="318.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <HBox prefHeight="57.0" prefWidth="553.0" spacing="20.0" style="-fx-background-color: #fff;" GridPane.columnIndex="1">
+                     <children>
+                        <Button fx:id="btnAddNewRoom" mnemonicParsing="false" onAction="#btnAddNewRoomHandle" prefHeight="25.0" prefWidth="143.0" style="-fx-background-color: #433269;" text="Add New Room" textFill="WHITE" />
+                        <Button mnemonicParsing="false" onAction="#deleteRoom" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="Delete" textFill="WHITE" />
+                        <TextField fx:id="fieldSearchRoom" prefHeight="25.0" prefWidth="174.0" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="Search" textFill="WHITE" />
+                     </children>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </HBox>
+                  <TableView fx:id="tableView" prefHeight="329.0" prefWidth="438.0" style="-fx-background-color: #fff;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <columns>
+                        <TableColumn fx:id="columnRoom_no" prefWidth="162.0" text="Room No" />
+                        <TableColumn fx:id="columnType" prefWidth="198.0" text="Type" />
+                        <TableColumn fx:id="columnCapacity" minWidth="0.0" prefWidth="215.0" text="Capacity" />
+                     </columns>
+                  </TableView>
+               </children>
+            </GridPane>
          </children>
       </StackPane>
       <Button fx:id="closeButton" layoutX="820.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeProgram" prefHeight="17.0" prefWidth="16.0" style="-fx-background-color: red; -fx-font-weight: bold;" text="X" textFill="WHITE">

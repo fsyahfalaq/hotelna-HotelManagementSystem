@@ -59,7 +59,7 @@
                   <HBox prefHeight="57.0" prefWidth="553.0" spacing="20.0">
                      <children>
                         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="View All" textFill="WHITE" />
-                        <TextField prefHeight="25.0" prefWidth="174.0" />
+                        <TextField fx:id="fieldSearchGuest" prefHeight="25.0" prefWidth="174.0" />
                         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="Search" textFill="WHITE" />
                      </children>
                   </HBox>
@@ -78,9 +78,7 @@
                   <HBox prefHeight="57.0" prefWidth="553.0" spacing="20.0" GridPane.columnIndex="1">
                      <children>
                         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="View All" textFill="WHITE" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="Booked" textFill="WHITE" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #433269;" text="Available" textFill="WHITE" />
-                        <TextField prefHeight="25.0" prefWidth="139.0" />
+                        <TextField fx:id="fieldSearchRoom" prefHeight="25.0" prefWidth="226.0" />
                         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" style="-fx-background-color: #433269;" text="Search" textFill="WHITE" />
                         <Button mnemonicParsing="false" onAction="#reloadTable" style="-fx-background-color: #433269;" text="Refresh" textFill="WHITE" />
                      </children>

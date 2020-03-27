@@ -16,18 +16,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import model.Rooms;
 import java.sql.*;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -63,6 +64,9 @@ public class FXMLDashboardController implements Initializable {
     private AnchorPane addRoomModal;
 
     @FXML
+    private TextField fieldSearchRoom;
+    
+    @FXML
     private TableColumn<Rooms, Integer> columnRoom_no;
 
     @FXML
@@ -79,6 +83,9 @@ public class FXMLDashboardController implements Initializable {
 
     @FXML
     private TableColumn<Rooms, String> columnAction;
+    
+    @FXML
+    private TextField fieldSearchGuest;
     
     @FXML
     private TableView<Guests> guestsTable;
@@ -184,7 +191,6 @@ public class FXMLDashboardController implements Initializable {
                         //Now we can create the action button
                         Rooms room = (Rooms) getTableView().getItems().get(getIndex());
                         Button bookButton;
-//                        String status = room.getStatus();
                         if (room.getStatus().equals("Booked")) {
                             bookButton = new Button("Deperature");
                             bookButton.setOnAction((ActionEvent event) -> {
@@ -240,8 +246,43 @@ public class FXMLDashboardController implements Initializable {
             return cell;
         };
         columnAction.setCellFactory(cellFactory);
-        tableView.refresh();
+//        tableView.refresh();
         tableView.setItems(list);
+    }
+    
+    public void searchRoomTable() {
+        FilteredList<Rooms> filteredData = new FilteredList<>(getRoomsList(), p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        fieldSearchRoom.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(rooms -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name field in your object with filter.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (String.valueOf(rooms.getRoom_no()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Room No.
+                } else if (String.valueOf(rooms.getType()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Type.
+                } else if (String.valueOf(rooms.getStatus()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Type.
+                } 
+
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        
+        SortedList<Rooms> sortedData = new SortedList<>(filteredData);
+        // 4. Bind the SortedList comparator to the TableView comparator
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        // 5. Add sorted (and filtered) data to the table.
+        tableView.setItems(sortedData);
     }
     
     public ObservableList<Guests> getGuestsList() {
@@ -275,10 +316,46 @@ public class FXMLDashboardController implements Initializable {
         columnPhone.setCellValueFactory(new PropertyValueFactory<Guests, String>("phone"));
         columnIdentityNumber.setCellValueFactory(new PropertyValueFactory<Guests, String>("identityNumber"));
         columnRoom.setCellValueFactory(new PropertyValueFactory<Guests, Integer>("room"));
-        guestsTable.refresh();
         guestsTable.setItems(list);
     }
 
+    public void searchGuestTable() {
+        
+        
+        FilteredList<Guests> filteredData = new FilteredList<>(getGuestsList(), p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        fieldSearchGuest.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(guests -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name field in your object with filter.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (String.valueOf(guests.getBookingId()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches BookingId.
+                } else if (String.valueOf(guests.getName()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Name.
+                } else if (String.valueOf(guests.getRoom()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches room.
+                }
+
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        
+        SortedList<Guests> sortedData = new SortedList<>(filteredData);
+        // 4. Bind the SortedList comparator to the TableView comparator
+        sortedData.comparatorProperty().bind(guestsTable.comparatorProperty());
+        // 5. Add sorted (and filtered) data to the table.
+        guestsTable.setItems(sortedData);
+    }
+    
     public void reloadTable() {
         showRooms();
         showGuests();
@@ -296,30 +373,6 @@ public class FXMLDashboardController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    private void btnAddRoomHandle(ActionEvent event) {
-//        addRoomModal.getChildren().setAll(FXMLLoader.load("FXMLaddRoomModal.fxml"));
-//        loadStage( fxml: "FXMLAddRoomModal.fxml");
-
-          showRooms();
-          tableView.refresh();
-//        try {
-//
-//            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLCoba.fxml"));
-//            Parent root1 = (Parent) fxmlLoader.load();
-//            Stage stage = new Stage();
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.initStyle(StageStyle.UNDECORATED);
-//
-//            Scene scene = new Scene(root1);
-//
-//            stage.setScene(scene);
-//            stage.show();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
     @FXML
@@ -346,6 +399,9 @@ public class FXMLDashboardController implements Initializable {
         // TODO
         showRooms();
         showGuests();
+        
+        searchGuestTable();
+        searchRoomTable();
     }
 
 }
